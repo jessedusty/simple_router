@@ -27,7 +27,13 @@ func proxyHandler(r *http.Request) func(http.ResponseWriter, *http.Request) {
 		if err != nil {
 			return IncorrectHostHandler
 		}
-		return httputil.NewSingleHostReverseProxy(urlVal).ServeHTTP
+
+		return func(w http.ResponseWriter, r *http.Request) {
+			p := httputil.NewSingleHostReverseProxy(urlVal)
+			r.Header.Add("X-Forwarded-Host", r.Host)
+			r.Header.Add("X-Origin-Host", r.Host)
+			p.ServeHTTP(w, r)
+		}
 	} else {
 		return CannotContactHostHander
 	}
