@@ -32,6 +32,7 @@ func proxyHandler(r *http.Request) func(http.ResponseWriter, *http.Request) {
 			p := httputil.NewSingleHostReverseProxy(urlVal)
 			r.Header.Add("X-Forwarded-Host", r.Host)
 			r.Header.Add("X-Origin-Host", r.Host)
+			r.Header.Add("X-Real-IP", r.RemoteAddr)
 			p.ServeHTTP(w, r)
 		}
 	} else {
