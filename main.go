@@ -35,7 +35,7 @@ func proxyHandler(r *http.Request) func(http.ResponseWriter, *http.Request) {
 			r.Header.Add("X-Real-IP", r.RemoteAddr)
 
 			// For some services - I use cloudflare on the frontend
-			r.Header.Add("X-Forwarded-Proto", "https")
+			r.Header.Add("X-Forwarded-Proto", "http")
 			p.ServeHTTP(w, r)
 		}
 	} else {

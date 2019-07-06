@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  router:
+    image: jessedusty/simple_router
+    links:
+      - home
+    ports:
+      - 80:80
+
+  home:
+    image: jessedusty/simple_hello
+    environment:
+      hello: home
+
+  test:
+    image: jessedusty/simple_hello
+    environment:
+      hello: test
